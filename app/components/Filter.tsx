@@ -12,18 +12,24 @@ export default function Filters({ endpoint }: { endpoint: string }) {
   const [searchText, setSearchText] = useState<string>('');
   const dispatch = useDispatch();
 
+  type FilterDataResponse = {
+    records: FilterDataType[];
+  };
+
   type FilterDataType = {
-    data: {
-      id: number;
-      name: string;
-    };
+    data: Filter;
+  };
+
+  type Filter = {
+    id: number;
+    name: string;
   };
 
   const {
     isLoading,
     error,
     data,
-  }: UseQueryResult<AxiosResponse<FilterDataType>> = useQuery(
+  }: UseQueryResult<AxiosResponse<FilterDataResponse>> = useQuery(
     searchText ? [endpoint, searchText] : [endpoint],
     () => {
       return axios.get(`https://api.harvardartmuseums.org/${endpoint}`, {
@@ -64,8 +70,8 @@ export default function Filters({ endpoint }: { endpoint: string }) {
       options={data?.data?.records || []}
       isClearable={true}
       inputValue={inputText}
-      getOptionValue={(option) => option.id}
-      getOptionLabel={(option) => option.name}
+      getOptionValue={(option: Filter) => option.id}
+      getOptionLabel={(option: Filter) => option.name}
       onInputChange={handleInputChange}
       isLoading={!!searchText && isLoading}
       onChange={({ id }) => {
