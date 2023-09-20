@@ -4,10 +4,13 @@ import debounce from 'lodash/debounce';
 import upperFirst from 'lodash/upperFirst';
 import axios, { AxiosResponse } from 'axios';
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
+import { setFilter } from '@/features/slices/filtersSlice';
+import { useDispatch } from 'react-redux';
 
-export default function Filters({ endpoint }) {
+export default function Filters({ endpoint }: { endpoint: string }) {
   const [inputText, setInputText] = useState<string>('');
   const [searchText, setSearchText] = useState<string>('');
+  const dispatch = useDispatch();
 
   type FilterDataType = {
     data: {
@@ -28,6 +31,7 @@ export default function Filters({ endpoint }) {
           apikey: process.env.NEXT_PUBLIC_API_KEY,
           size: 10,
           q: `name:${searchText}* OR ${upperFirst(searchText)}*`,
+          usedby: endpoint === 'technique' ? 'culture:37528515' : null,
         },
       });
     },
@@ -64,6 +68,9 @@ export default function Filters({ endpoint }) {
       getOptionLabel={(option) => option.name}
       onInputChange={handleInputChange}
       isLoading={!!searchText && isLoading}
+      onChange={({ id }) => {
+        dispatch(setFilter({ key: endpoint, value: id }));
+      }}
     />
   );
 }
