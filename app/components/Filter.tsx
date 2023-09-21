@@ -37,7 +37,6 @@ export default function Filters({ endpoint }: { endpoint: string }) {
           apikey: process.env.NEXT_PUBLIC_API_KEY,
           size: 10,
           q: `name:${searchText}* OR ${upperFirst(searchText)}*`,
-          usedby: endpoint === 'technique' ? 'culture:37528515' : null,
         },
       });
     },

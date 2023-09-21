@@ -4,21 +4,16 @@ import {
   UseInfiniteQueryResult,
   useInfiniteQuery,
 } from '@tanstack/react-query';
-import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import { AxiosResponse } from 'axios';
 import Filters from '../components/Filters';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../app/store';
-import ArtObject, { TArtObject } from '@/components/artObject/ArtObject';
-
-type ArtObjectsResponse = {
-  info: {
-    page: number;
-    pages: number;
-  };
-  records: TArtObject[];
-};
+import ArtObject from '@/components/artObject/ArtObject';
+import {
+  ArtObject as ArtObjectType,
+  ObjectsResponse,
+} from '@/api/types/object';
+import { getObjects } from '@/api';
 
 export default function Test() {
   const observerTarget = useRef(null);
@@ -40,42 +35,33 @@ export default function Test() {
     isFetchingNextPage: isFetchingNextObjectsPage,
     fetchNextPage: fetchNextObjectsPage,
     error: objectsError,
-  }: UseInfiniteQueryResult<
-    AxiosResponse<ArtObjectsResponse>
-  > = useInfiniteQuery(
+  }: UseInfiniteQueryResult<ObjectsResponse> = useInfiniteQuery(
     ['objects', searchValue, filters],
-    ({ pageParam = 1 }) => {
-      return axios.get<ArtObjectsResponse>(
-        'https://api.harvardartmuseums.org/object',
-        {
-          params: {
-            apikey: process.env.NEXT_PUBLIC_API_KEY,
-            hasimage: 1,
-            size: 10,
-            page: pageParam,
-            q: `imagepermissionlevel:0 AND primaryimageurl:*`,
-            title: searchValue,
-            culture: filters.culture,
-            technique: filters.technique,
-            // fields: 'description,primaryimageurl,title,id',
-          },
+    async ({ pageParam = 1 }) => {
+      return getObjects({
+        params: {
+          apikey: process.env.NEXT_PUBLIC_API_KEY,
+          hasimage: 1,
+          size: 10,
+          page: pageParam,
+          q: `imagepermissionlevel:0 AND primaryimageurl:*`,
+          title: searchValue,
+          culture: filters.culture,
+          technique: filters.technique,
+          // fields: 'description,primaryimageurl,title,id',
         },
-      );
+      });
     },
     {
       refetchOnWindowFocus: false,
-      getNextPageParam: (lastPage: AxiosResponse<ArtObjectsResponse>) => {
+      getNextPageParam: (lastPage: ObjectsResponse) => {
         console.log('lastPage', lastPage);
-        const page = lastPage?.data?.info?.page;
-        const pages = lastPage?.data?.info?.pages;
+        const page = lastPage?.info?.page;
+        const pages = lastPage?.info?.pages;
         return page !== undefined && page < pages ? page + 1 : undefined;
       },
     },
   );
-
-  // useEffect(() => {
-  //   console.log(objectsData?.data?.records);
-  // }, [objectsData]);
 
   useEffect(() => {
     console.log(filters);
@@ -85,7 +71,7 @@ export default function Test() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          fetchNextObjectsPage();
+          fetchNextObjectsPage().catch((e) => console.log(e));
         }
       },
       { threshold: 1 },
@@ -116,12 +102,12 @@ export default function Test() {
           Something went wrong, please try again {JSON.stringify(objectsError)}
         </div>
       )}
-      {objectsData?.pages?.[0]?.data?.records?.length === 0 &&
+      {objectsData?.pages?.[0]?.records?.length === 0 &&
         objectsError === null && <div>Nothing found</div>}
       <ul>
         {objectsError === null &&
-          (objectsData?.pages || []).map(({ data: { records } }) =>
-            records.map((object: TArtObject) => (
+          (objectsData?.pages || []).map(({ records }) =>
+            records.map((object: ArtObjectType) => (
               <ArtObject key={object.id} object={object} />
             )),
           )}
