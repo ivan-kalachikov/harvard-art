@@ -14,6 +14,7 @@ import {
   ObjectsResponse,
 } from '@/api/types/object';
 import { getObjects } from '@/api';
+import styles from './page.module.scss';
 
 export default function Test() {
   const observerTarget = useRef(null);
@@ -87,7 +88,7 @@ export default function Test() {
   }, [observerTarget]);
 
   return (
-    <div className='objects'>
+    <div className={styles.objects}>
       <div className='search-form'>
         <Filters />
         <input

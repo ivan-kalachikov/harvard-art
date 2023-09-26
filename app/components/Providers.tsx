@@ -9,13 +9,11 @@ const queryClient: QueryClient = new QueryClient();
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <div className='teeeest'>
-      <ReactReduxProvider store={store}>
-        <QueryClientProvider client={queryClient}>
-          {children}
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </ReactReduxProvider>
-    </div>
+    <ReactReduxProvider store={store}>
+      <QueryClientProvider client={queryClient}>
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </ReactReduxProvider>
   );
 }

@@ -7,6 +7,7 @@ import { setFilter } from '@/features/slices/filtersSlice';
 import { useDispatch } from 'react-redux';
 import { getFilter } from '@/api';
 import { Filter, FiltersResponse } from '@/api/types/filter';
+import style from './filter.module.scss';
 
 export default function Filters({ endpoint }: { endpoint: string }) {
   const [inputText, setInputText] = useState<string>('');
@@ -58,7 +59,7 @@ export default function Filters({ endpoint }: { endpoint: string }) {
       onInputChange={handleInputChange}
       isLoading={!!searchText && isLoading}
       onChange={(option: Filter) => {
-        dispatch(setFilter({ key: endpoint, value: option.id }));
+        dispatch(setFilter({ key: endpoint, value: option?.id || null }));
       }}
     />
   );
