@@ -2,37 +2,21 @@ import { useState, useRef, useEffect } from 'react';
 import Select, { InputActionMeta } from 'react-select';
 import debounce from 'lodash/debounce';
 import upperFirst from 'lodash/upperFirst';
-import axios, { AxiosResponse } from 'axios';
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import { setFilter } from '@/features/slices/filtersSlice';
 import { useDispatch } from 'react-redux';
+import { getFilter } from '@/api';
+import { Filter, FiltersResponse } from '@/api/types/filter';
 
 export default function Filters({ endpoint }: { endpoint: string }) {
   const [inputText, setInputText] = useState<string>('');
   const [searchText, setSearchText] = useState<string>('');
   const dispatch = useDispatch();
 
-  type FilterDataResponse = {
-    records: FilterDataType[];
-  };
-
-  type FilterDataType = {
-    data: Filter;
-  };
-
-  type Filter = {
-    id: number;
-    name: string;
-  };
-
-  const {
-    isLoading,
-    error,
-    data,
-  }: UseQueryResult<AxiosResponse<FilterDataResponse>> = useQuery(
+  const { isLoading, error, data }: UseQueryResult<FiltersResponse> = useQuery(
     searchText ? [endpoint, searchText] : [endpoint],
     () => {
-      return axios.get(`https://api.harvardartmuseums.org/${endpoint}`, {
+      return getFilter(endpoint, {
         params: {
           apikey: process.env.NEXT_PUBLIC_API_KEY,
           size: 10,
@@ -50,7 +34,7 @@ export default function Filters({ endpoint }: { endpoint: string }) {
   }, [data]);
 
   const handleSearchDebounced = useRef(
-    debounce((searchText) => setSearchText(searchText), 300),
+    debounce((searchText: string) => setSearchText(searchText), 300),
   ).current;
 
   const handleInputChange = (inputText: string, meta: InputActionMeta) => {
@@ -66,15 +50,15 @@ export default function Filters({ endpoint }: { endpoint: string }) {
 
   return (
     <Select
-      options={data?.data?.records || []}
+      options={data?.records}
       isClearable={true}
       inputValue={inputText}
-      getOptionValue={(option: Filter) => option.id}
-      getOptionLabel={(option: Filter) => option.name}
+      getOptionValue={(option: Filter): number => option.id}
+      getOptionLabel={(option: Filter): string => option.name}
       onInputChange={handleInputChange}
       isLoading={!!searchText && isLoading}
-      onChange={({ id }) => {
-        dispatch(setFilter({ key: endpoint, value: id }));
+      onChange={(option: Filter) => {
+        dispatch(setFilter({ key: endpoint, value: option.id }));
       }}
     />
   );

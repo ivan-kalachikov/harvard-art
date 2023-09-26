@@ -1,6 +1,7 @@
 import client from './client';
 import routes from './routes';
 import { GetObjectsParams, ObjectsResponse } from './types/object';
+import { GetFiltersParams, FiltersResponse } from './types/filter';
 
 const getObjects = async ({ params }: { params: GetObjectsParams }) => {
   return client
@@ -9,12 +10,12 @@ const getObjects = async ({ params }: { params: GetObjectsParams }) => {
 };
 
 const getFilter = async (
-  routeName: key of,
-  { params }: { params: GetObjectsParams },
+  routeName: string,
+  { params }: { params: GetFiltersParams },
 ) => {
   return client
-    .get<ObjectsResponse>(routes[routeName], { params })
+    .get<FiltersResponse>(routes[routeName], { params })
     .then((response) => response.data);
 };
 
-export { getObjects };
+export { getFilter, getObjects };

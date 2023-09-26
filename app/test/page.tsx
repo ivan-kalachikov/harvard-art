@@ -5,9 +5,9 @@ import {
   useInfiniteQuery,
 } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
-import Filters from '../components/Filters';
+import Filters from '@/components/Filters';
 import { useSelector } from 'react-redux';
-import type { RootState } from '../../app/store';
+import type { RootState } from '@/store';
 import ArtObject from '@/components/artObject/ArtObject';
 import {
   ArtObject as ArtObjectType,
@@ -37,7 +37,7 @@ export default function Test() {
     error: objectsError,
   }: UseInfiniteQueryResult<ObjectsResponse> = useInfiniteQuery(
     ['objects', searchValue, filters],
-    async ({ pageParam = 1 }) => {
+    async ({ pageParam = 1 }: { pageParam: number }) => {
       return getObjects({
         params: {
           apikey: process.env.NEXT_PUBLIC_API_KEY,

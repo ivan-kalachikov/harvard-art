@@ -1,3 +1,5 @@
+import { commonDataResponseWrapper } from './common';
+
 export type ArtObject = {
   id: number;
   title: string;
@@ -16,10 +18,4 @@ export type GetObjectsParams = {
   technique: number | null;
 };
 
-export type ObjectsResponse = {
-  info: {
-    page: number;
-    pages: number;
-  };
-  records: ArtObject[];
-};
+export type ObjectsResponse = commonDataResponseWrapper<ArtObject>;
