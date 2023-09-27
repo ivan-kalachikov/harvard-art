@@ -1,4 +1,5 @@
-import { commonDataResponseWrapper } from './common';
+import { commonDataResponseWrapper } from '@/types/common';
+import { FiltersKeys } from '@/types/filter';
 
 export type ArtObject = {
   id: number;
@@ -7,15 +8,19 @@ export type ArtObject = {
   primaryimageurl: string | null;
 };
 
-export type GetObjectsParams = {
+type FiltersParams = {
+  [K in FiltersKeys]: string | number | null;
+};
+
+type CommonGetObjectParams = {
   apikey: string | undefined;
   hasimage: number;
   size: number;
   page: number;
   q: string;
   title: string;
-  culture: number | null;
-  technique: number | null;
 };
+
+export type GetObjectsParams = CommonGetObjectParams & FiltersParams;
 
 export type ObjectsResponse = commonDataResponseWrapper<ArtObject>;

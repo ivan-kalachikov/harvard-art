@@ -1,15 +1,22 @@
 import { useState, useRef, useEffect } from 'react';
-import Select, { InputActionMeta } from 'react-select';
+import Select, { InputActionMeta, SingleValue } from 'react-select';
 import debounce from 'lodash/debounce';
 import upperFirst from 'lodash/upperFirst';
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import { setFilter } from '@/features/slices/filtersSlice';
 import { useDispatch } from 'react-redux';
 import { getFilter } from '@/api';
-import { Filter, FiltersResponse } from '@/api/types/filter';
-import style from './filter.module.scss';
+import { FiltersKeys, Filter, FiltersResponse } from '@/types/filter';
 
-export default function Filters({ endpoint }: { endpoint: string }) {
+export default function Filters({
+  endpoint,
+  sort,
+  getOptionValue,
+}: {
+  endpoint: FiltersKeys;
+  sort?: string;
+  getOptionValue?: (option: SingleValue<Filter>) => string | number | null;
+}) {
   const [inputText, setInputText] = useState<string>('');
   const [searchText, setSearchText] = useState<string>('');
   const dispatch = useDispatch();
@@ -22,6 +29,8 @@ export default function Filters({ endpoint }: { endpoint: string }) {
           apikey: process.env.NEXT_PUBLIC_API_KEY,
           size: 10,
           q: `name:${searchText}* OR ${upperFirst(searchText)}*`,
+          sort: sort || 'objectcount',
+          sortorder: 'desc',
         },
       });
     },
@@ -49,17 +58,28 @@ export default function Filters({ endpoint }: { endpoint: string }) {
     return <div>Something went wrong</div>;
   }
 
+  const getDefaultOptionValue = (option: SingleValue<Filter>): number | null =>
+    option?.id || null;
+
   return (
-    <Select
+    <Select<Filter>
       options={data?.records}
       isClearable={true}
       inputValue={inputText}
-      getOptionValue={(option: Filter): number => option.id}
-      getOptionLabel={(option: Filter): string => option.name}
+      getOptionValue={(option) => option.id.toString()}
+      getOptionLabel={(option) => option.name}
       onInputChange={handleInputChange}
       isLoading={!!searchText && isLoading}
-      onChange={(option: Filter) => {
-        dispatch(setFilter({ key: endpoint, value: option?.id || null }));
+      onChange={(option) => {
+        dispatch(
+          setFilter({
+            key: endpoint,
+            value:
+              typeof getOptionValue === 'function'
+                ? getOptionValue(option)
+                : getDefaultOptionValue(option),
+          }),
+        );
       }}
     />
   );

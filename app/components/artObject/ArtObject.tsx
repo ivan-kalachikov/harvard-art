@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from './artObject.module.scss';
-import { ArtObject } from '@/api/types/object';
+import { ArtObject } from '@/types/object';
 
 export default function ArtObject({ object }: { object: ArtObject }) {
   return (

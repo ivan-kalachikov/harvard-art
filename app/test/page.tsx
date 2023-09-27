@@ -9,10 +9,7 @@ import Filters from '@/components/Filters';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import ArtObject from '@/components/artObject/ArtObject';
-import {
-  ArtObject as ArtObjectType,
-  ObjectsResponse,
-} from '@/api/types/object';
+import { ArtObject as ArtObjectType, ObjectsResponse } from '@/types/object';
 import { getObjects } from '@/api';
 import styles from './page.module.scss';
 
@@ -38,17 +35,23 @@ export default function Test() {
     error: objectsError,
   }: UseInfiniteQueryResult<ObjectsResponse> = useInfiniteQuery(
     ['objects', searchValue, filters],
-    async ({ pageParam = 1 }: { pageParam: number }) => {
+    async ({ pageParam = 1 }: { pageParam?: number }) => {
       return getObjects({
         params: {
           apikey: process.env.NEXT_PUBLIC_API_KEY,
           hasimage: 1,
           size: 10,
+          century: filters.century,
           page: pageParam,
           q: `imagepermissionlevel:0 AND primaryimageurl:*`,
           title: searchValue,
           culture: filters.culture,
+          color: filters.color,
           technique: filters.technique,
+          period: filters.period,
+          place: filters.place,
+          worktype: filters.worktype,
+          classification: filters.classification,
           // fields: 'description,primaryimageurl,title,id',
         },
       });
@@ -56,7 +59,6 @@ export default function Test() {
     {
       refetchOnWindowFocus: false,
       getNextPageParam: (lastPage: ObjectsResponse) => {
-        console.log('lastPage', lastPage);
         const page = lastPage?.info?.page;
         const pages = lastPage?.info?.pages;
         return page !== undefined && page < pages ? page + 1 : undefined;

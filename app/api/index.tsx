@@ -1,7 +1,7 @@
-import client from './client';
-import routes from './routes';
-import { GetObjectsParams, ObjectsResponse } from './types/object';
-import { GetFiltersParams, FiltersResponse } from './types/filter';
+import client from '@/api/client';
+import routes from '@/api/routes';
+import { GetObjectsParams, ObjectsResponse } from '@/types/object';
+import { GetFiltersParams, FiltersKeys, FiltersResponse } from '@/types/filter';
 
 const getObjects = async ({ params }: { params: GetObjectsParams }) => {
   return client
@@ -10,7 +10,7 @@ const getObjects = async ({ params }: { params: GetObjectsParams }) => {
 };
 
 const getFilter = async (
-  routeName: string,
+  routeName: FiltersKeys,
   { params }: { params: GetFiltersParams },
 ) => {
   return client

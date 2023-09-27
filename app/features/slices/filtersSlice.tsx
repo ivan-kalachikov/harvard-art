@@ -1,18 +1,15 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-
-type FiltersKeys = 'culture' | 'technique';
-type SetFilterPayload = {
-  key: FiltersKeys;
-  value: number | null;
-};
-type FiltersState = {
-  culture: number | null;
-  technique: number | null;
-};
+import { SetFilterPayload, FiltersState } from '@/types/filter';
 
 const initialState: FiltersState = {
+  century: null,
   culture: null,
+  period: null,
   technique: null,
+  place: null,
+  color: null,
+  worktype: null,
+  classification: null,
 };
 
 const filters = createSlice({
@@ -20,11 +17,10 @@ const filters = createSlice({
   initialState,
   reducers: {
     setFilter: (state, action: PayloadAction<SetFilterPayload>) => {
-      console.log(action.payload.key, action.payload.value);
-      state[action.payload.key as keyof FiltersState] = action.payload.value;
+      state[action.payload.key] = action.payload.value;
     },
     resetFilter: (state, action: PayloadAction<SetFilterPayload>) => {
-      state[action.payload.key as keyof FiltersState] = null;
+      state[action.payload.key] = null;
     },
   },
 });
