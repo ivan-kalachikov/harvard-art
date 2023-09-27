@@ -1,22 +1,28 @@
-import Filter from './Filter';
+import Filter from '@/components/Filter';
+import { FiltersKeys } from '@/types/filter';
 
 export default function Filters() {
+  const simpleFilters: FiltersKeys[] = [
+    'culture',
+    'technique',
+    'century',
+    'period',
+    'place',
+    'worktype',
+    'classification',
+  ];
   return (
     <div style={{ display: 'flex' }}>
-      <Filter endpoint='culture' />
-      <Filter endpoint='technique' />
-      <Filter endpoint='century' />
-      <Filter endpoint='period' />
-      <Filter endpoint='place' />
+      {simpleFilters.map((filter) => (
+        <Filter key={filter} filter={filter} />
+      ))}
       <Filter
-        endpoint='color'
+        filter='color'
         sort='name'
         getOptionValue={(option) => {
           return option?.hex ? `%23${option.hex.slice(1)}` : null;
         }}
       />
-      <Filter endpoint='worktype' />
-      <Filter endpoint='classification' />
     </div>
   );
 }

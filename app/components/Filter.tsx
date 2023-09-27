@@ -9,11 +9,11 @@ import { getFilter } from '@/api';
 import { FiltersKeys, Filter, FiltersResponse } from '@/types/filter';
 
 export default function Filters({
-  endpoint,
+  filter,
   sort,
   getOptionValue,
 }: {
-  endpoint: FiltersKeys;
+  filter: FiltersKeys;
   sort?: string;
   getOptionValue?: (option: SingleValue<Filter>) => string | number | null;
 }) {
@@ -22,9 +22,9 @@ export default function Filters({
   const dispatch = useDispatch();
 
   const { isLoading, error, data }: UseQueryResult<FiltersResponse> = useQuery(
-    searchText ? [endpoint, searchText] : [endpoint],
+    searchText ? [filter, searchText] : [filter],
     () => {
-      return getFilter(endpoint, {
+      return getFilter(filter, {
         params: {
           apikey: process.env.NEXT_PUBLIC_API_KEY,
           size: 10,
@@ -73,7 +73,7 @@ export default function Filters({
       onChange={(option) => {
         dispatch(
           setFilter({
-            key: endpoint,
+            key: filter,
             value:
               typeof getOptionValue === 'function'
                 ? getOptionValue(option)
