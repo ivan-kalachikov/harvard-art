@@ -4,6 +4,7 @@ const routes: Routes = {
   century: '/century',
   culture: '/culture',
   object: '/object',
+  objectDetails: '/object/:slug',
   technique: '/technique',
   period: '/period',
   place: '/place',

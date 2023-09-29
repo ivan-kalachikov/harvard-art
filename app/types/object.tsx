@@ -8,6 +8,11 @@ export type ArtObject = {
   primaryimageurl: string | null;
 };
 
+export type ArtObjectDetails = {
+  title: string;
+  description: string | null;
+};
+
 type FiltersParams = {
   [K in FiltersKeys]: string | number | null;
 };
@@ -22,5 +27,6 @@ type CommonGetObjectParams = {
 };
 
 export type GetObjectsParams = CommonGetObjectParams & FiltersParams;
+export type GetObjectDetailsParams = { apikey: string | undefined };
 
 export type ObjectsResponse = commonDataResponseWrapper<ArtObject>;

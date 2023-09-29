@@ -1,11 +1,26 @@
 import client from '@/api/client';
 import routes from '@/api/routes';
-import { GetObjectsParams, ObjectsResponse } from '@/types/object';
+import {
+  GetObjectsParams,
+  GetObjectDetailsParams,
+  ObjectsResponse,
+} from '@/types/object';
 import { GetFiltersParams, FiltersKeys, FiltersResponse } from '@/types/filter';
 
 const getObjects = async ({ params }: { params: GetObjectsParams }) => {
   return client
     .get<ObjectsResponse>(routes.object, { params })
+    .then((response) => response.data);
+};
+
+const getObjectDetails = async (
+  slug: string,
+  params: GetObjectDetailsParams,
+) => {
+  return client
+    .get<ObjectsResponse>(routes.objectDetails.replace(':slug', slug), {
+      params,
+    })
     .then((response) => response.data);
 };
 
@@ -18,4 +33,4 @@ const getFilter = async (
     .then((response) => response.data);
 };
 
-export { getFilter, getObjects };
+export { getFilter, getObjects, getObjectDetails };

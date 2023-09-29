@@ -13,17 +13,14 @@ const initialState: FiltersState = {
 };
 
 const filters = createSlice({
-  name: 'counter',
+  name: 'filters',
   initialState,
   reducers: {
     setFilter: (state, action: PayloadAction<SetFilterPayload>) => {
       state[action.payload.key] = action.payload.value;
     },
-    resetFilter: (state, action: PayloadAction<SetFilterPayload>) => {
-      state[action.payload.key] = null;
-    },
   },
 });
 
-export const { setFilter, resetFilter } = filters.actions;
+export const { setFilter } = filters.actions;
 export default filters.reducer;
