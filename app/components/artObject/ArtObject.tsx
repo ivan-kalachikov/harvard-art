@@ -15,6 +15,7 @@ export default function ArtObject({ object }: { object: ArtObject }) {
               alt={object.title}
               sizes='(300px)'
             ></Image>
+            <div className='image-count'>{object.imagecount}</div>
           </Link>
         )}
       </div>

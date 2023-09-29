@@ -54,6 +54,8 @@ export default function Index() {
           place: filters.place,
           worktype: filters.worktype,
           classification: filters.classification,
+          sort: 'rank',
+          sortorder: 'desc',
           // fields: 'description,primaryimageurl,title,id',
         },
       });

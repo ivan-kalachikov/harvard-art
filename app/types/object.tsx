@@ -6,6 +6,7 @@ export type ArtObject = {
   title: string;
   description: string | null;
   primaryimageurl: string | null;
+  imagecount: number;
 };
 
 export type ArtObjectDetails = {
@@ -24,6 +25,8 @@ type CommonGetObjectParams = {
   page: number;
   q: string;
   title: string;
+  sort: string;
+  sortorder: string;
 };
 
 export type GetObjectsParams = CommonGetObjectParams & FiltersParams;
