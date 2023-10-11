@@ -79,9 +79,13 @@ body {
 }
 
 body {
-  background-color: #fff;
-  background-color: var(--main-background);
-  transition: background-color 0.4s ease-in-out;
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
 }
 
 a {
@@ -89,8 +93,8 @@ a {
   text-decoration: none;
 }
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
-} */
+}

@@ -5,7 +5,6 @@ import { ArtObjectDetails } from '@/types/object';
 import { getObjectDetails } from '@/api';
 import Image from 'next/image';
 import styles from './page.module.scss';
-import sortBy from 'lodash/sortBy';
 
 export default function Details({ params }: { params: { slug: string } }) {
   const {
@@ -23,18 +22,8 @@ export default function Details({ params }: { params: { slug: string } }) {
     },
   );
 
-  const getPrevailingColor = () => {
-    return sortBy(data?.colors, 'percent')?.[0]?.color || '#fff';
-  };
-
   return (
-    <div
-      className='object-details'
-      style={{
-        padding: '50px',
-        backgroundColor: getPrevailingColor(),
-      }}
-    >
+    <div className='object-details'>
       <h1>{data?.title}</h1>
       <p>{data?.description}</p>
       {data?.images.map((image) => (

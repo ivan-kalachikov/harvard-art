@@ -2,17 +2,8 @@ import Image from 'next/image';
 import styles from './artObject.module.scss';
 import { ArtObject } from '@/types/object';
 import Link from 'next/link';
-import sortBy from 'lodash/sortBy';
 
 export default function ArtObject({ object }: { object: ArtObject }) {
-  const getPrevailingColor = () => {
-    return sortBy(object?.colors, 'percent')?.[0]?.color || '#fff';
-  };
-
-  const mouseEnterHandler = () => {
-    document.body.style.setProperty('--main-background', getPrevailingColor());
-  };
-
   return (
     <li key={object.id}>
       <div className={styles.image}>
@@ -23,7 +14,6 @@ export default function ArtObject({ object }: { object: ArtObject }) {
               src={object.primaryimageurl}
               alt={object.title}
               sizes='(300px)'
-              onMouseEnter={mouseEnterHandler}
             ></Image>
             <div className='image-count'>{object.imagecount}</div>
           </Link>
