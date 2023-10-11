@@ -24,7 +24,8 @@
     "react-dom": "18.2.0",
     "react-redux": "^8.1.2",
     "react-select": "^5.7.4",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "yet-another-react-lightbox": "^3.13.1"
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^4.35.0",
