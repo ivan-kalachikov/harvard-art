@@ -12,14 +12,12 @@ import ArtObject from '@/components/artObject/ArtObject';
 import { ArtObject as ArtObjectType, ObjectsResponse } from '@/types/object';
 import { getObjects } from '@/api';
 import styles from './page.module.scss';
-import { useSearchParams } from 'next/navigation';
 
 export default function Index() {
   const observerTarget = useRef(null);
   const [searchValue, setSearchValue] = useState('');
   const [searchInputValue, setSearchInputValue] = useState('');
   const filters = useSelector((state: RootState) => state.filters);
-  const searchParams = useSearchParams();
 
   const onChangeSearchInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInputValue(e.target.value);
@@ -111,11 +109,13 @@ export default function Index() {
       )}
       {objectsData?.pages?.[0]?.records?.length === 0 &&
         objectsError === null && <div>Nothing found</div>}
-      <ul>
+      <ul className={styles.gallery}>
         {objectsError === null &&
           (objectsData?.pages || []).map(({ records }) =>
             records.map((object: ArtObjectType) => (
-              <ArtObject key={object.id} object={object} />
+              <li key={object.id}>
+                <ArtObject object={object} className={styles.artObject} />
+              </li>
             )),
           )}
         <li ref={observerTarget}></li>

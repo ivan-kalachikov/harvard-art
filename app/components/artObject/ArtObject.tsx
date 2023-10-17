@@ -3,9 +3,15 @@ import styles from './artObject.module.scss';
 import { ArtObject } from '@/types/object';
 import Link from 'next/link';
 
-export default function ArtObject({ object }: { object: ArtObject }) {
+export default function ArtObject({
+  object,
+  className,
+}: {
+  object: ArtObject;
+  className?: string;
+}) {
   return (
-    <li key={object.id}>
+    <div key={object.id} className={`${styles.artObject} ${className}`}>
       <div className={styles.image}>
         {object.primaryimageurl && (
           <Link href={`/${object.id}`}>
@@ -15,7 +21,7 @@ export default function ArtObject({ object }: { object: ArtObject }) {
               alt={object.title}
               sizes='(300px)'
             ></Image>
-            <div className='image-count'>{object.imagecount}</div>
+            <div className={styles.imageCount}>{object.imagecount}</div>
           </Link>
         )}
       </div>
@@ -29,6 +35,6 @@ export default function ArtObject({ object }: { object: ArtObject }) {
       ) : (
         ''
       )}
-    </li>
+    </div>
   );
 }

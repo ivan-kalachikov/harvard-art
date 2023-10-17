@@ -4,7 +4,6 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { ArtObjectDetails } from '@/types/object';
 import { getObjectDetails } from '@/api';
 import { Captions, Counter, Zoom } from 'yet-another-react-lightbox/plugins';
-import { RenderSlideProps, Slide } from 'yet-another-react-lightbox';
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
