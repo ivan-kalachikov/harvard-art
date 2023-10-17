@@ -12,6 +12,15 @@ export type ArtObject = {
 export type ArtObjectDetails = {
   title: string;
   description: string | null;
+  images: ArtObjectImage[];
+};
+
+export type ArtObjectImage = {
+  baseimageurl: string;
+  width: number;
+  height: number;
+  publiccaption: string;
+  imageid: number;
 };
 
 type FiltersParams = {

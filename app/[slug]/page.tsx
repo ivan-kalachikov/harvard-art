@@ -3,25 +3,23 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { ArtObjectDetails } from '@/types/object';
 import { getObjectDetails } from '@/api';
-import Lightbox from 'yet-another-react-lightbox';
 import { Captions, Counter, Zoom } from 'yet-another-react-lightbox/plugins';
-import { useState, useRef } from 'react';
+import { RenderSlideProps, Slide } from 'yet-another-react-lightbox';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.scss';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/captions.css';
 import 'yet-another-react-lightbox/plugins/counter.css';
+import LightboxSlide from '@/components/LightboxSlide';
+import useLightbox from '@/hooks/useLightbox';
 
 export default function Details({ params }: { params: { slug: string } }) {
-  const [openLightbox, setOpenLightbox] = useState(false);
+  const { openLightbox, renderLightbox } = useLightbox();
   const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
-  const captionsRef = useRef(null);
 
-  const {
-    // isLoading,
-    data, // error,
-  }: UseQueryResult<ArtObjectDetails> = useQuery(
+  const { data }: UseQueryResult<ArtObjectDetails> = useQuery(
     ['objects', params.slug],
     async () => {
       return getObjectDetails(params.slug, {
@@ -34,7 +32,7 @@ export default function Details({ params }: { params: { slug: string } }) {
   );
 
   const handleImageClick = (index: number) => {
-    setOpenLightbox(true);
+    openLightbox();
     setLightboxImageIndex(index);
   };
 
@@ -43,38 +41,28 @@ export default function Details({ params }: { params: { slug: string } }) {
       <h1>{data?.title}</h1>
       <p>{data?.description}</p>
       <Link href='/'>Back</Link>
-      <Lightbox
-        plugins={[Captions, Counter, Zoom]}
-        captions={{ ref: captionsRef }}
-        open={openLightbox}
-        close={() => setOpenLightbox(false)}
-        counter={{ container: { style: { top: '30px' } } }}
-        slides={data?.images.map((image) => ({
+      {renderLightbox({
+        plugins: [Captions, Counter, Zoom],
+        captions: { showToggle: true },
+        counter: { container: { style: { top: '30px' } } },
+        slides: data?.images.map((image) => ({
           src: image.baseimageurl,
           width: image.width,
           height: image.height,
           alt: image.publiccaption,
           title: image.publiccaption,
-        }))}
-        index={lightboxImageIndex}
-        on={{
-          click: () => {
-            (captionsRef.current?.visible
-              ? captionsRef.current?.hide
-              : captionsRef.current?.show)?.();
-          },
-        }}
-        zoom={{
+        })),
+        render: { slide: LightboxSlide },
+        index: lightboxImageIndex,
+        zoom: {
           scrollToZoom: true,
-        }}
-      />
+        },
+      })}
       {data?.images.map((image, index) => (
-        <div className={styles.image}>
+        <div className={styles.image} key={image.imageid}>
           <Image
-            key={image.imageid}
             fill
             src={image.baseimageurl}
-            alt={image.copyright}
             sizes='(300px)'
             alt={image.publiccaption}
             onClick={() => handleImageClick(index)}
