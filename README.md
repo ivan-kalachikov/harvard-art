@@ -1,38 +1,56 @@
-# harvard-art
-Harvard museum catalog, based on open The Harvard Art Museums API
+# Harvard Museum Catalog
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Overview
 
-## Getting Started
+This project is a web application for interacting with the Harvard Art Museums' collection, using the Harvard Art Museums API. Built with Next.js, Typescript, and React Query, its primary features include browsing the catalog, searching, applying filters, and viewing individual item details.
 
-First, run the development server:
+## Current Status
 
+The project is in progress. Key functionalities like catalog browsing, search, and filters are operational. Users can also explore details of specific items.
+
+## How to Set Up the Project
+
+To get the project running locally:
+
+1. **Clone the Repository**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+git clone https://github.com/ivan-kalachikov/harvard-art.git
+cd harvard-museum-catalog
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install Dependencies**
+```bash
+npm install
+```
+3. **Set Up Environment**
+Create a `.env` file with the necessary API keys and configurations.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Run in Development Mode**
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This will start the app on [`localhost:3000`](http:\\localhost:3000).
 
-## Learn More
+**Build for Production**
+```bash
+npm run build
+```
+Prepares the application for deployment.
 
-To learn more about Next.js, take a look at the following resources:
+1. **Start Production Server**
+```bash
+npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Contributions are welcome. Feel free to suggest new features, bug fixes, or improvements in documentation.
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is licensed under the MIT License.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Acknowledgements
 
+Special thanks to The Harvard Art Museums for providing access to their collections via their API.
