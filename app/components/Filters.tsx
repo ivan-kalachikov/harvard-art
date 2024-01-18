@@ -20,7 +20,7 @@ export default function Filters() {
         filter='color'
         sort='name'
         getOptionValue={(option) => {
-          return option?.hex ? `%23${option.hex.slice(1)}` : null;
+          return option?.hex ? `%23${(option.hex as string).slice(1)}` : null;
         }}
       />
     </div>

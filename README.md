@@ -13,32 +13,39 @@ The project is in progress. Key functionalities like catalog browsing, search, a
 To get the project running locally:
 
 1. **Clone the Repository**
+
 ```bash
 git clone https://github.com/ivan-kalachikov/harvard-art.git
 cd harvard-museum-catalog
 ```
 
 2. **Install Dependencies**
+
 ```bash
 npm install
 ```
+
 3. **Set Up Environment**
-Create a `.env` file with the necessary API keys and configurations.
+   Create a `.env` file with the necessary API keys and configurations.
 
 4. **Run in Development Mode**
+
 ```bash
 npm run dev
 ```
 
-This will start the app on [`localhost:3000`](http:\\localhost:3000).
+This will start the app on [`localhost:3000`](http:\localhost:3000).
 
 **Build for Production**
+
 ```bash
 npm run build
 ```
+
 Prepares the application for deployment.
 
 1. **Start Production Server**
+
 ```bash
 npm start
 ```
