@@ -4,3 +4,4 @@ coverage
 .prettierignore
 .stylelintignore
 .eslintignore
+vercel.json
