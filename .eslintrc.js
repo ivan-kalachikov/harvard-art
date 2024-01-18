@@ -8,7 +8,6 @@ module.exports = {
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
-      include: ['next-env.d.ts', '**/*.ts', '**/*.tsx', '.next/types/**/*.ts'],
       parserOptions: {
         project: ['./tsconfig.json'],
         tsconfigRootDir: __dirname,
