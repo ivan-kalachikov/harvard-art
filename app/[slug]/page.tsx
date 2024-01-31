@@ -7,6 +7,7 @@ import { Captions, Counter, Zoom } from 'yet-another-react-lightbox/plugins';
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import Footer from '@/components/footer/Footer';
 import styles from './page.module.scss';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/captions.css';
@@ -36,10 +37,12 @@ export default function Details({ params }: { params: { slug: string } }) {
   };
 
   return (
-    <div className='object-details'>
+    <div className={styles.objectDetails}>
       <h1>{data?.title}</h1>
       <p>{data?.description}</p>
-      <Link href='/'>Back</Link>
+      <Link href='/' className={styles.linkBack}>
+        Back
+      </Link>
       {renderLightbox({
         plugins: [Captions, Counter, Zoom],
         captions: { showToggle: true },
@@ -57,17 +60,20 @@ export default function Details({ params }: { params: { slug: string } }) {
           scrollToZoom: true,
         },
       })}
-      {data?.images.map((image, index) => (
-        <div className={styles.image} key={image.imageid}>
-          <Image
-            fill
-            src={image.baseimageurl}
-            sizes='(300px)'
-            alt={image.publiccaption}
-            onClick={() => handleImageClick(index)}
-          ></Image>
-        </div>
-      ))}
+      <div className={styles.objectDetailsImages}>
+        {data?.images.map((image, index) => (
+          <div className={styles.image} key={image.imageid}>
+            <Image
+              fill
+              src={image.baseimageurl}
+              sizes='(300px)'
+              alt={image.publiccaption}
+              onClick={() => handleImageClick(index)}
+            ></Image>
+          </div>
+        ))}
+      </div>
+      <Footer />
     </div>
   );
 }

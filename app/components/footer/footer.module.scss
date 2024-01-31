@@ -1,0 +1,17 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  z-index: 1;
+  border: 1px dashed #888;
+  background-color: #222;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+
+  a {
+    text-decoration: underline;
+  }
+}

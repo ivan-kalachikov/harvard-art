@@ -1,15 +1,72 @@
 .objects {
+  padding-top: 60px;
   min-height: 100dvh;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media screen and (width <= 1230px) {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 80px;
+  }
 }
 
 .gallery {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 40px;
   list-style: none;
   padding-left: 0;
 }
 
 .artObject {
-  width: 300px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  border: 1px dashed #888;
+  padding: 10px;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  background-color: #222;
+  padding: 20px;
+  width: 320px;
+  z-index: 1;
+  border: 1px dashed #888;
+
+  @media screen and (width <= 768px) {
+    width: 100%;
+    top: 80px;
+  }
+}
+
+.filtersButton {
+  height: 40px;
+  cursor: pointer;
+  user-select: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  z-index: 1;
+  border: 1px dashed #888;
+  background-color: #222;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.searchInput,
+.searchButton {
+  padding: 10px;
 }

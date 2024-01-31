@@ -5,10 +5,11 @@ import {
   useInfiniteQuery,
 } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
-import Filters from '@/components/Filters';
+import Filters from '@/components/filters/Filters';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import ArtObject from '@/components/artObject/ArtObject';
+import Footer from '@/components/footer/Footer';
 import { ArtObject as ArtObjectType, ObjectsResponse } from '@/types/object';
 import { getObjects } from '@/api';
 import styles from './page.module.scss';
@@ -17,6 +18,7 @@ export default function Index() {
   const observerTarget = useRef(null);
   const [searchValue, setSearchValue] = useState('');
   const [searchInputValue, setSearchInputValue] = useState('');
+  const [filtersOpened, setFiltersOpened] = useState(false);
   const filters = useSelector((state: RootState) => state.filters);
 
   const onChangeSearchInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,10 +71,6 @@ export default function Index() {
   );
 
   useEffect(() => {
-    console.log(filters);
-  }, [filters]);
-
-  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -93,15 +91,25 @@ export default function Index() {
 
   return (
     <div className={styles.objects}>
-      <div className='search-form'>
-        <Filters />
-        <input
-          value={searchInputValue}
-          onChange={onChangeSearchInputValue}
-        ></input>
-        <button onClick={onSearch}>Search</button>
+      <div
+        className={styles.filtersButton}
+        onClick={() => setFiltersOpened(!filtersOpened)}
+      >
+        Filters {filtersOpened ? '-' : '+'}
       </div>
-      <hr />
+      {filtersOpened && (
+        <div className={styles.filters}>
+          <Filters />
+          <input
+            className={styles.searchInput}
+            value={searchInputValue}
+            onChange={onChangeSearchInputValue}
+          ></input>
+          <button className={styles.searchButton} onClick={onSearch}>
+            Search
+          </button>
+        </div>
+      )}
       {objectsError !== null && !isObjectsLoading && (
         <div>
           Something went wrong, please try again {JSON.stringify(objectsError)}
@@ -121,6 +129,7 @@ export default function Index() {
         <li ref={observerTarget}></li>
       </ul>
       {(isObjectsLoading || isFetchingNextObjectsPage) && <div>Loading...</div>}
+      <Footer />
     </div>
   );
 }

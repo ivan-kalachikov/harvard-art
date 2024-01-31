@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import Select, { InputActionMeta, SingleValue } from 'react-select';
 import debounce from 'lodash/debounce';
 import upperFirst from 'lodash/upperFirst';
@@ -39,10 +39,6 @@ export default function Filters({
     },
   );
 
-  useEffect(() => {
-    console.log('data', data);
-  }, [data]);
-
   const handleSearchDebounced = useRef(
     debounce((searchText: string) => setSearchText(searchText), 300),
   ).current;
@@ -63,6 +59,7 @@ export default function Filters({
 
   return (
     <Select<Filter>
+      placeholder={filter}
       options={data?.records}
       isClearable={true}
       inputValue={inputText}

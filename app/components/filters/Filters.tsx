@@ -1,5 +1,6 @@
 import Filter from '@/components/Filter';
 import { FiltersKeys } from '@/types/filter';
+import styles from './filters.module.scss';
 
 export default function Filters() {
   const simpleFilters: FiltersKeys[] = [
@@ -12,7 +13,7 @@ export default function Filters() {
     'classification',
   ];
   return (
-    <div style={{ display: 'flex' }}>
+    <div className={styles.filters}>
       {simpleFilters.map((filter) => (
         <Filter key={filter} filter={filter} />
       ))}
