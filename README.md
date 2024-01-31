@@ -4,7 +4,7 @@
 
 This project is a web application for interacting with the Harvard Art Museums' collection, using the Harvard Art Museums API. Built with Next.js, Typescript, and React Query, its primary features include browsing the catalog, searching, applying filters, and viewing individual item details.
 
-## Current Status
+## ❗Current Status
 
 The project is in progress. Key functionalities like catalog browsing, search, and filters are operational. Users can also explore details of specific items.
 
