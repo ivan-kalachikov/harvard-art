@@ -1,5 +1,5 @@
 const path = require('path');
-const StylelintPlugin = require('stylelint-webpack-plugin'); // line to add
+const StylelintPlugin = require('stylelint-webpack-plugin');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

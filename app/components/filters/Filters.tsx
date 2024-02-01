@@ -21,7 +21,6 @@ export default function Filters() {
         filter='color'
         sort='name'
         getOptionValue={(option) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           return option?.hex ? `%23${option.hex.slice(1)}` : null;
         }}
       />

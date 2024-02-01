@@ -56,7 +56,6 @@ export default function Index() {
           classification: filters.classification,
           sort: 'rank',
           sortorder: 'desc',
-          // fields: 'description,primaryimageurl,title,id',
         },
       });
     },
