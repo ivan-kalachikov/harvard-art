@@ -8,6 +8,12 @@ This project is a web application for interacting with the Harvard Art Museums' 
 
 The project is in progress. Key functionalities like catalog browsing, search, and filters are operational. Users can also explore details of specific items.
 
+## Following steps
+- Enhance UI
+- Fix SSR
+- Use i18n
+- Write tests
+
 ## How to Set Up the Project
 
 To get the project running locally:
